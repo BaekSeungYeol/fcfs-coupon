@@ -1,3 +1,9 @@
+plugins {
+    kotlin("jvm") version "1.9.21"
+    kotlin("plugin.spring") version "1.9.21"
+}
+
+
 val bootJar: org.springframework.boot.gradle.tasks.bundling.BootJar by tasks
 
 bootJar.enabled = false
