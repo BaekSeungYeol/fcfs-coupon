@@ -26,4 +26,3 @@ CREATE TABLE IF NOT EXISTS `coupon`.`coupon_issues`
     'date_updated' datetime(6)  NOT NULL COMMENT '수정 일시',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT '쿠폰 발급 내역';
-
