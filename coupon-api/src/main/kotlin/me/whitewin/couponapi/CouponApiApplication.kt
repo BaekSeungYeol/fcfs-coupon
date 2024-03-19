@@ -4,7 +4,9 @@ import me.whitewin.couponcore.CouponCoreConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Import
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
+@EnableJpaAuditing
 @Import(CouponCoreConfiguration::class)
 @SpringBootApplication
 class CouponApiApplication

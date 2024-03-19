@@ -1,3 +1,28 @@
 spring:
-  application:
-    name: coupon-api
+  #  data:
+  #    web:
+  #      pageable:
+  #        one-indexed-parameters: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/coupon?serverTimezone=Asia/Seoul&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: password
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+#logging.level:
+#    org.hibernate.SQL: debug
+#  org.hibernate.type: trace
