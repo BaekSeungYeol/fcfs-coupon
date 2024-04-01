@@ -1,5 +1,6 @@
 package me.whitewin.couponapi.service
 
+import me.whitewin.couponapi.service.CouponIssueRedisService.Companion.getIssueRequestKey
 import me.whitewin.couponcore.repository.redis.RedisRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -34,4 +35,35 @@ class CouponIssueRedisServiceTest {
 
         assertThat(result).isTrue()
     }
+
+
+    @Test
+    fun `쿠폰 중복 발급 검증 - 발급된 내역에 유저가 존재하지 않으면 true 를 반환한다`() {
+        // given
+        val couponId = 1L
+        val userId = 1L
+
+        // when
+        val result = sut.availableUserIssueQuantity(couponId, userId)
+
+        // then
+        assertThat(result).isEqualTo(true)
+    }
+
+    @Test
+    fun `쿠폰 중복 발급 검증 - 발급된 내역에 유저가 존재하면 false 를 반환한다`() {
+        // given
+        val couponId = 1L
+        val userId = 1L
+        redisTemplate.opsForSet().add(getIssueRequestKey(couponId), userId.toString())
+
+        // when
+        val result = sut.availableUserIssueQuantity(couponId, userId)
+
+        // then
+        assertThat(result).isEqualTo(false)
+    }
+
+
+
 }

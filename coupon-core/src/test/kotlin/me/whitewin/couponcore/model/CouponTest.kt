@@ -118,5 +118,4 @@ internal class CouponTest {
         assertThatThrownBy { coupon.issue() }.isInstanceOf(ApplicationException::class.java)
 
     }
-
 }
