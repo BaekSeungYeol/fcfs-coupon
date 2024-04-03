@@ -17,8 +17,12 @@ class RedisRepository(
         return redisTemplate.opsForZSet().addIfAbsent(key,value,score) ?: false
     }
 
-    fun sAdd(key: String, value: String, score: Double): Long {
+    fun sAdd(key: String, value: String): Long {
         return redisTemplate.opsForSet().add(key,value) ?: throw IllegalStateException()
+    }
+
+    fun rPush(key: String, value: String): Long {
+        return redisTemplate.opsForList().rightPush(key, value) ?: throw IllegalStateException()
     }
 
     fun sCard(key: String): Long {

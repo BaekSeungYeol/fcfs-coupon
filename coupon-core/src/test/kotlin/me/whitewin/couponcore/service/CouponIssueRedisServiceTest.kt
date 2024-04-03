@@ -1,5 +1,6 @@
-package me.whitewin.couponapi.service
+package me.whitewin.couponcore.service
 
+import me.whitewin.couponcore.service.CouponIssueRedisService.Companion.getIssueRequestKey
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

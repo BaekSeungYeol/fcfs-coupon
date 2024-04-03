@@ -41,7 +41,14 @@ subprojects {
 
         implementation("org.springframework.boot:spring-boot-starter-validation")
 
+
+        // jackson
+        implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+        implementation("com.fasterxml.jackson.core:jackson-databind")
+
         // jpa
+        implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
         implementation("com.querydsl:querydsl-jpa:5.0.0:jakarta")
         annotationProcessor("com.querydsl:querydsl-apt:5.0.0:jakarta")
         annotationProcessor("jakarta.annotation:jakarta.annotation-api")
