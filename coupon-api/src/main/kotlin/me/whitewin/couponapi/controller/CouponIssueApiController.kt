@@ -2,15 +2,17 @@ package me.whitewin.couponapi.controller
 
 import me.whitewin.couponapi.dto.CouponIssueRequest
 import me.whitewin.couponapi.service.CouponIssueApiService
+import me.whitewin.couponcore.service.CouponAsyncIssueServiceV1
+import me.whitewin.couponcore.service.CouponAsyncIssueServiceV2
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/api/v1/issue")
+@RequestMapping("/api")
 class CouponIssueApiController(
-    private val couponIssueApiService: CouponIssueApiService
+    private val couponIssueApiService: CouponIssueApiService,
 ) {
 
     @PostMapping
@@ -20,9 +22,16 @@ class CouponIssueApiController(
     }
 
 
-    @PostMapping("/async")
+    @PostMapping("/v1/issue/async")
     fun issueV1Async(@RequestBody couponIssueRequest: CouponIssueRequest): Boolean {
-        couponIssueApiService.issueRequest(couponIssueRequest)
+        couponIssueApiService.asyncIssueRequestV1(couponIssueRequest)
         return true
     }
+
+    @PostMapping("/v2/issue/async")
+    fun issueV2Async(@RequestBody couponIssueRequest: CouponIssueRequest): Boolean {
+        couponIssueApiService.asyncIssueRequestV2(couponIssueRequest)
+        return true
+    }
+
 }
