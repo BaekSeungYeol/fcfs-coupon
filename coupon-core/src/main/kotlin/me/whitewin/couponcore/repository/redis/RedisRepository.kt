@@ -43,6 +43,18 @@ class RedisRepository(
         return redisTemplate.opsForSet().isMember(key,value) ?: false
     }
 
+    fun lSize(key: String): Long? {
+        return redisTemplate.opsForList().size(key)
+    }
+
+    fun lIndex(key: String, index: Long): String? {
+     return redisTemplate.opsForList().index(key, index)
+    }
+
+    fun lPop(key: String): String? {
+        return redisTemplate.opsForList().leftPop(key)
+    }
+
     fun issueRequest(couponId: Long, userId: Long, totalIssueQuantity: Int) {
         val issueRequestKey = getIssueRequestKey(couponId)
         val couponIssueRequest = CouponIssueRequest(couponId, userId)
