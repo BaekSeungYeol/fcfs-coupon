@@ -15,15 +15,12 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CouponAsyncIssueServiceV2(
     private val redisRepository: RedisRepository,
-    private val couponIssueRedisService: CouponIssueRedisService,
-    private val objectMapper: ObjectMapper,
-    private val distributeLockExecutor: LockExecutor,
     private val couponCacheService: CouponCacheService
 ) {
 
 
     fun issue(couponId: Long, userId: Long) {
-        val coupon = couponCacheService.getCouponCache(couponId)
+        val coupon = couponCacheService.getCouponLocalCache(couponId)
         coupon.checkIssuableCoupon()
         issueRequest(couponId, userId, coupon.totalQuantity)
     }

@@ -14,7 +14,8 @@ enum class ResponseCode(
     COUPON_NOT_EXISTS(HttpStatus.BAD_REQUEST, "NEC-4002", "쿠폰이 존재하지 않습니다."),
     COUPON_ISSUE_DUPLICATED(HttpStatus.BAD_REQUEST, "NEC-4003", "이미 발급된 쿠폰입니다."),
     INVALID_COUPON_ISSUE_QUANTITY(HttpStatus.BAD_REQUEST, "NEC-4004", "발급 가능한 수량을 초과합니다."),
-    FAILED_COUPON_ISSUE_REQUEST(HttpStatus.BAD_REQUEST, "NEC-4005", "쿠폰 발급이 실패했습니다.");
+    FAILED_COUPON_ISSUE_REQUEST(HttpStatus.BAD_REQUEST, "NEC-4005", "쿠폰 발급이 실패했습니다."),
+    ALL_COUPON_DONE(HttpStatus.BAD_REQUEST, "NEC-4006", "모든 쿠폰 수량을 소진하였습니다.");
 
     fun build(): ApplicationException {
         return ApplicationException(httpStatus, code, reason)

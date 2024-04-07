@@ -5,6 +5,8 @@ import me.whitewin.couponcore.repository.CouponIssueRepository
 import me.whitewin.couponcore.repository.CouponRepository
 import me.whitewin.couponcore.error.ResponseCode
 import me.whitewin.couponcore.model.CouponIssue
+import me.whitewin.couponcore.model.event.CouponIssueCompleteEvent
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class CouponIssueService(
     private val couponIssueRepository: CouponIssueRepository,
-    private val couponRepository: CouponRepository
+    private val couponRepository: CouponRepository,
+    private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
 
@@ -21,6 +24,7 @@ class CouponIssueService(
         val coupon = findCoupon(couponId)
         coupon.issue()
         saveCouponIssue(couponId, userId)
+        publishCouponEvent(coupon)
     }
 
     @Transactional(readOnly = true)
@@ -41,6 +45,12 @@ class CouponIssueService(
 
     private fun isAlreadyIssued(couponId: Long, userId: Long) {
         couponIssueRepository.findFirstByCouponIdEqualsAndUserId(couponId, userId) ?: throw ResponseCode.COUPON_ISSUE_DUPLICATED.build()
+    }
+
+    private fun publishCouponEvent(coupon: Coupon) {
+        if(coupon.isIssueComplete()) {
+            applicationEventPublisher.publishEvent(CouponIssueCompleteEvent(coupon.id))
+        }
     }
 }
 

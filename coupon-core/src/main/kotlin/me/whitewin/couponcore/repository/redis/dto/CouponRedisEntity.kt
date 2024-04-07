@@ -11,6 +11,7 @@ data class CouponRedisEntity(
     val id: Long,
     val couponType: CouponType,
     val totalQuantity: Int,
+    val available: Boolean,
     @JsonSerialize(using = ZonedDateTimeSerializer::class) val dateIssueStart: ZonedDateTime?,
     @JsonSerialize(using = ZonedDateTimeSerializer::class) val dateIssueEnd: ZonedDateTime?
 ) {
@@ -21,6 +22,7 @@ data class CouponRedisEntity(
                 coupon.id,
                 coupon.couponType,
                 coupon.totalQuantity ?: 0,
+                coupon.hasAvailableQuantity(),
                 coupon.dateIssueStart,
                 coupon.dateIssueEnd
             )
@@ -34,6 +36,9 @@ data class CouponRedisEntity(
     }
 
     fun checkIssuableCoupon() {
+        if(!available) {
+            throw ResponseCode.ALL_COUPON_DONE.build()
+        }
         if(!availableIssueDate()) {
             throw ResponseCode.FAILED_COUPON_ISSUE_REQUEST.build()
         }

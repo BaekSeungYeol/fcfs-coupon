@@ -49,7 +49,12 @@ class Coupon(
 
     fun isValidDate(): Boolean {
         val now = ZonedDateTime.now()
-        return dateIssueStart?.isBefore(now) ?: false && dateIssueEnd?.isAfter(now) ?: false
+        return (dateIssueStart?.isBefore(now) ?: false)  && (dateIssueEnd?.isAfter(now) ?: false)
+    }
+
+    fun isIssueComplete(): Boolean{
+        val now = ZonedDateTime.now()
+        return (dateIssueEnd?.isBefore(now) ?: false ) || !hasAvailableQuantity()
     }
 
     fun issue() {
